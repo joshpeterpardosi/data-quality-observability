@@ -73,6 +73,16 @@ streamlit run dashboard/app.py
 
 Opens at `http://localhost:8501` with three pages: **Overview** (pass/fail by dimension, curation gate effectiveness), **Check Drilldown** (every check, filterable), **Trends & Anomalies** (daily volume vs. expected range, run history).
 
+### Or run it all with Docker
+
+One command, no local Python setup needed:
+
+```bash
+docker compose -f docker/docker-compose.yml up --build
+```
+
+This builds the image, generates synthetic data if none exists, runs the full pipeline (load → validate → curate → re-validate), then starts the dashboard on `http://localhost:8501`. Data persists in a named volume (`dq-data`) across restarts — `docker compose down -v` wipes it for a clean-slate run.
+
 ## Tests
 
 ```bash
@@ -101,6 +111,5 @@ docs/adr/              architecture decision records
 ## Known gaps
 
 - No scheduler — the pipeline runs on demand, not on a cron.
-- No Docker image yet.
 - `dq.metrics_timeseries` grows unbounded across reruns (fine at this scale, would need pruning for continuous use).
 - The `timeliness` check fails by design on the synthetic dataset (seeded data caps out at 5 days old, threshold is 2) — that's the fixture doing its job, not a bug.

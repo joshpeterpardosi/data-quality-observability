@@ -1,7 +1,7 @@
-"""Small reusable HTML/CSS pieces: stat tile, status badge. Kept plain per dataviz skill's Tier 1 spec."""
+"""Small reusable HTML/CSS pieces: stat tile. Kept plain per dataviz skill's Tier 1 spec."""
 import streamlit as st
 
-from dashboard.palette import CHROME, STATUS
+from dashboard.palette import CHROME
 
 _CSS = f"""
 <style>
@@ -29,14 +29,6 @@ _CSS = f"""
     color: {CHROME["ink_secondary"]};
     margin-top: 2px;
 }}
-.dq-badge {{
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: white;
-}}
 </style>
 """
 
@@ -52,8 +44,3 @@ def stat_tile(label: str, value: str, sub: str = ""):
         f'<div class="dq-stat-value">{value}</div>{sub_html}</div>',
         unsafe_allow_html=True,
     )
-
-
-def status_badge(status: str) -> str:
-    color = STATUS.get(status, CHROME["muted"])
-    return f'<span class="dq-badge" style="background:{color}">{status.upper()}</span>'

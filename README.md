@@ -4,6 +4,8 @@ A small end-to-end pipeline that ingests messy e-commerce CSVs into DuckDB, vali
 
 Built as a portfolio piece: the design decisions are written down as ADRs, not just implemented.
 
+**Live demo:** [data-quality-observability-7ua38gy2ny7bjpvjuydkhb.streamlit.app](https://data-quality-observability-7ua38gy2ny7bjpvjuydkhb.streamlit.app/) — may take a few seconds on first load (cold start on the free tier, plus the pipeline bootstraps its data on that first request).
+
 ## What it does
 
 ```

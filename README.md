@@ -1,5 +1,7 @@
 # Data Quality & Observability Platform
 
+[![CI](https://github.com/joshpeterpardosi/data-quality-observability/actions/workflows/ci.yml/badge.svg)](https://github.com/joshpeterpardosi/data-quality-observability/actions/workflows/ci.yml)
+
 A small end-to-end pipeline that ingests messy e-commerce CSVs into DuckDB, validates them against explicit data-quality rules across five dimensions, curates only the rows that pass, and surfaces every result in a Streamlit dashboard.
 
 Built as a portfolio piece: the design decisions are written down as ADRs, not just implemented.
@@ -93,6 +95,8 @@ python -m pytest
 
 20 tests: Pandera schemas against fixture data, SQL checks (orphan FK / freshness / anomaly) against an in-memory DuckDB, and the curation gate end to end (dedupe-keep-first, orphan-FK exclusion, type casting).
 
+CI runs these plus `pyflakes` on every push and pull request, against Python 3.11 and 3.13 ([workflow](.github/workflows/ci.yml)).
+
 ## Project layout
 
 ```
@@ -112,6 +116,6 @@ docs/adr/              architecture decision records
 
 ## Known gaps
 
-- No scheduler — the pipeline runs on demand, not on a cron.
+- No scheduler — the pipeline runs on demand, not on a cron. An orchestrator (Airflow, Dagster) would be the next step, so freshness is enforced by a schedule rather than by hand.
 - `dq.metrics_timeseries` grows unbounded across reruns (fine at this scale, would need pruning for continuous use).
 - The `timeliness` check fails by design on the synthetic dataset (seeded data caps out at 5 days old, threshold is 2) — that's the fixture doing its job, not a bug.

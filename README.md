@@ -1,12 +1,13 @@
 # Data Quality & Observability Platform
 
 [![CI](https://github.com/joshpeterpardosi/data-quality-observability/actions/workflows/ci.yml/badge.svg)](https://github.com/joshpeterpardosi/data-quality-observability/actions/workflows/ci.yml)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://data-quality-observability-7ua38gy2ny7bjpvjuydkhb.streamlit.app/)
 
 A small end-to-end pipeline that ingests messy e-commerce CSVs into DuckDB, validates them against explicit data-quality rules across five dimensions, curates only the rows that pass, and surfaces every result in a Streamlit dashboard.
 
 Built as a portfolio piece: the design decisions are written down as ADRs, not just implemented.
 
-**Live demo:** [data-quality-observability-7ua38gy2ny7bjpvjuydkhb.streamlit.app](https://data-quality-observability-7ua38gy2ny7bjpvjuydkhb.streamlit.app/) — may take a few seconds on first load (cold start on the free tier, plus the pipeline bootstraps its data on that first request).
+> Live demo may take a few seconds on first load — cold start on the free tier, plus the pipeline bootstraps its own data on that first request.
 
 ## What it does
 

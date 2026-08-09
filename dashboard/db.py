@@ -20,7 +20,32 @@ QUERIES_DIR = os.path.join(os.path.dirname(__file__), "queries")
 
 @st.cache_resource
 def get_con():
-    return get_connection()
+    con = get_connection()
+    _bootstrap_if_empty(con)
+    return con
+
+
+def _bootstrap_if_empty(con):
+    """First run on a fresh deploy (e.g. Streamlit Cloud): no CLI step ran the
+    pipeline first, so do it here, once, before any page queries dq.*."""
+    if con.execute("SELECT count(*) FROM raw.customers").fetchone()[0] > 0:
+        return
+
+    import glob
+
+    from src.curation.build_curated import build_curated
+    from src.ingestion.load_raw import load_raw
+    from src.validation.runner import run_curated_validation, run_raw_validation
+
+    raw_dir = os.path.join(_ROOT, "data", "raw")
+    if not glob.glob(os.path.join(raw_dir, "*.csv")):
+        from scripts.generate_synthetic_data import main as generate_data
+        generate_data()
+
+    load_raw(con)
+    valid_frames, _status = run_raw_validation(con)
+    build_curated(con, valid_frames)
+    run_curated_validation(con)
 
 
 def load_query(name: str):

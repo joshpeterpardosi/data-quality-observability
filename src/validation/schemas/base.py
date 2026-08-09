@@ -6,6 +6,7 @@ expressed as a per-row Check — it's an aggregate stat over the whole column.
 completeness on strict (non-nullable) columns is Pandera's own `not_nullable`
 check; completeness on tolerant columns is computed directly here instead.
 """
+import pandas as pd
 import pandera.pandas as pa
 
 from src.validation.checks.base import CheckResult

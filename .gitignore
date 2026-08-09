@@ -6,4 +6,4 @@ venv/
 data/raw/*.csv
 data/duckdb/*.duckdb
 .env
-.claude/settings.local.json
+.claude/

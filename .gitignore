@@ -7,3 +7,12 @@ data/raw/*.csv
 data/duckdb/*.duckdb
 .env
 .claude/
+interview/
+
+# graphify output — local only, never pushed
+graphify-out/
+
+# Agent tooling — local only, never pushed
+.agents/
+.scratch/
+.hallmark/
